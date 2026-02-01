@@ -1,7 +1,6 @@
 {
-  "buildCommand": "echo 'No build needed'",
+  "buildCommand": "bash build.sh",
   "installCommand": "echo 'No install needed'",
-  "outputDirectory": ".",
   "git": {
     "deploymentEnabled": {
       "main": true,
