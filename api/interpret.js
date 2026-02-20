@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.OPENROUTER_API_KEY;
-  const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-r1';
+  const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v3.2';
 
   if (!apiKey) {
     return res.status(500).json({ error: 'API key not configured' });
