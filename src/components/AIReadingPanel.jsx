@@ -68,7 +68,7 @@ export default function AIReadingPanel({
                   <img
                     src={card.image}
                     alt={lang === 'ko' ? card.nameKo : card.nameEn}
-                    className="w-12 h-[74px] md:w-16 md:h-[99px] rounded object-cover
+                    className="w-12 h-[82px] md:w-16 md:h-[110px] rounded object-contain
                                border border-white/10"
                   />
                   <span className="text-[9px] md:text-[10px] text-white/40 mt-0.5 max-w-[50px] truncate text-center">
