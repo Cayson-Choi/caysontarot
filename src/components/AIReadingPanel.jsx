@@ -62,7 +62,7 @@ export default function AIReadingPanel({
 
   return (
     <motion.div
-      className="min-h-dvh flex flex-col items-center px-1 py-8"
+      className="min-h-dvh flex flex-col items-center px-0 py-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -110,7 +110,7 @@ export default function AIReadingPanel({
         {reading && !loading && (
           <motion.div
             key="result"
-            className="w-full max-w-lg"
+            className="w-full max-w-2xl px-1"
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
