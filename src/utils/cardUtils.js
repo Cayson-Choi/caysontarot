@@ -8,7 +8,10 @@ export function shuffle(array) {
   return arr;
 }
 
-export function drawCards(deck, count) {
+export function drawCards(deck, count, allowReversed = false) {
   const shuffled = shuffle(deck);
-  return shuffled.slice(0, count);
+  return shuffled.slice(0, count).map((card) => ({
+    ...card,
+    reversed: allowReversed ? Math.random() < 0.5 : false,
+  }));
 }

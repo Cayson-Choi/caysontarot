@@ -1,5 +1,5 @@
 export default {
-  title: 'Cayson Tarot',
+  title: 'Harim Tarot',
   subtitle: 'Your destiny illuminated by starlight',
   beginReading: 'Begin Reading',
   questionTitle: 'Focus on your question',
@@ -11,6 +11,7 @@ export default {
   selectSpreadDesc: 'Choose your card layout',
   customCount: 'Number of Cards',
   tapToReveal: 'Tap a card to reveal your destiny',
+  flipAll: 'Flip All',
   cardsRevealed: 'cards revealed',
   getAIReading: 'Get AI Reading',
   saveCardImage: 'Save Card Image',
@@ -28,4 +29,6 @@ export default {
   advice: 'Advice',
   copyright: '© CAYSON TECH. All rights reserved.',
   cardPosition: 'Position',
+  allowReversed: 'Allow Reversed',
+  reversed: 'Reversed',
 };

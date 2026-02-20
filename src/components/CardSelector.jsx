@@ -14,7 +14,7 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-export default function CardSelector({ onSelect, customCount, onCustomCountChange, onBack }) {
+export default function CardSelector({ onSelect, customCount, onCustomCountChange, onBack, allowReversed, onToggleReversed }) {
   const { lang, t } = useLanguage();
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -32,7 +32,24 @@ export default function CardSelector({ onSelect, customCount, onCustomCountChang
       <h2 className="font-serif text-xl md:text-2xl font-semibold mb-1 gold-gradient-text">
         {t.selectSpread}
       </h2>
-      <p className="text-white/40 text-xs mb-6">{t.selectSpreadDesc}</p>
+      <p className="text-white/40 text-xs mb-4">{t.selectSpreadDesc}</p>
+
+      {/* Reversed toggle */}
+      <button
+        onClick={onToggleReversed}
+        className={`flex items-center gap-2 mb-6 px-4 py-2 rounded-full text-xs font-medium
+                    border transition-all duration-300 active:scale-95
+                    ${allowReversed
+                      ? 'bg-amber-400/15 border-amber-400/40 text-amber-300'
+                      : 'bg-white/5 border-white/10 text-white/40 hover:border-white/20'}`}
+      >
+        <div className={`w-8 h-4 rounded-full relative transition-colors duration-300
+                        ${allowReversed ? 'bg-amber-400/40' : 'bg-white/15'}`}>
+          <div className={`absolute top-0.5 w-3 h-3 rounded-full transition-all duration-300
+                          ${allowReversed ? 'left-4 bg-amber-400' : 'left-0.5 bg-white/50'}`} />
+        </div>
+        {t.allowReversed}
+      </button>
 
       {/* Grid */}
       <motion.div

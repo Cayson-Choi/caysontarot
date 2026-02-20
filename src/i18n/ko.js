@@ -1,5 +1,5 @@
 export default {
-  title: '케이슨 타로',
+  title: '하림 타로',
   subtitle: '별빛이 비추는 당신의 운명',
   beginReading: '리딩 시작하기',
   questionTitle: '마음속 질문을 떠올려 보세요',
@@ -11,6 +11,7 @@ export default {
   selectSpreadDesc: '카드 배열 방식을 선택하세요',
   customCount: '카드 수',
   tapToReveal: '카드를 터치하여 운명을 확인하세요',
+  flipAll: '모두 뒤집기',
   cardsRevealed: '카드 공개',
   getAIReading: 'AI 해석 받기',
   saveCardImage: '카드 이미지 저장',
@@ -28,4 +29,6 @@ export default {
   advice: '조언',
   copyright: '© CAYSON TECH. All rights reserved.',
   cardPosition: '포지션',
+  allowReversed: '역방향 사용',
+  reversed: '역방향',
 };

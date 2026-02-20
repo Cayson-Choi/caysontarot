@@ -10,6 +10,7 @@ export default function TarotTable({
   spread,
   flippedIds,
   onFlip,
+  onFlipAll,
   allFlipped,
   flippedCount,
   totalCards,
@@ -74,15 +75,29 @@ export default function TarotTable({
         </div>
       </div>
 
-      {/* Tap hint */}
+      {/* Tap hint + Flip all button */}
       {!allFlipped && (
-        <motion.p
-          className="text-xs text-white/30 mb-6"
-          animate={{ opacity: [0.3, 0.7, 0.3] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-        >
-          {t.tapToReveal}
-        </motion.p>
+        <div className="flex flex-col items-center mb-6 gap-2">
+          <motion.p
+            className="text-xs text-white/30"
+            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            transition={{ duration: 2.5, repeat: Infinity }}
+          >
+            {t.tapToReveal}
+          </motion.p>
+          <motion.button
+            className="px-4 py-1.5 rounded-lg text-xs font-medium
+                       bg-white/[0.06] backdrop-blur-md border border-white/[0.12]
+                       text-white/60 transition-all duration-300
+                       hover:bg-white/[0.1] hover:border-white/20 hover:text-white
+                       active:scale-95"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={onFlipAll}
+          >
+            {t.flipAll}
+          </motion.button>
+        </div>
       )}
 
       {allFlipped && <div className="mb-6" />}
@@ -114,7 +129,10 @@ export default function TarotTable({
               <img
                 src={card.image}
                 alt={lang === 'ko' ? card.nameKo : card.nameEn}
-                style={{ width: '120px', height: '206px', objectFit: 'contain', borderRadius: '8px' }}
+                style={{
+                  width: '120px', height: '206px', objectFit: 'contain', borderRadius: '8px',
+                  ...(card.reversed ? { transform: 'rotate(180deg)' } : {}),
+                }}
                 crossOrigin="anonymous"
               />
               <span style={{ color: 'rgba(251,191,36,0.8)', fontSize: '12px', fontWeight: 500 }}>

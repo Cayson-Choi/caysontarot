@@ -16,16 +16,7 @@ function AppInner() {
   const reading = useTarotReading();
   const ai = useAIInterpretation();
 
-  const handleBegin = () => reading.goToPhase('question');
-
-  const handleQuestionSubmit = (q) => {
-    reading.setQuestion(q);
-    reading.goToPhase('spread');
-  };
-
-  const handleQuestionSkip = () => {
-    reading.goToPhase('spread');
-  };
+  const handleBegin = () => reading.goToPhase('spread');
 
   const handleSelectSpread = (spread, customCount) => {
     if (spread.id === 'custom') {
@@ -33,6 +24,16 @@ function AppInner() {
     } else {
       reading.selectSpread(spread);
     }
+    reading.goToPhase('question');
+  };
+
+  const handleQuestionSubmit = (q) => {
+    reading.setQuestion(q);
+    reading.goToPhase('reading');
+  };
+
+  const handleQuestionSkip = () => {
+    reading.goToPhase('reading');
   };
 
   const handleRequestAI = () => {
@@ -41,6 +42,7 @@ function AppInner() {
       cards: reading.drawnCards.map((c) => ({
         nameKo: c.nameKo,
         nameEn: c.nameEn,
+        reversed: c.reversed || false,
         position: reading.spread
           ? (lang === 'ko' ? reading.spread.positionsKo : reading.spread.positionsEn)?.[
               reading.drawnCards.indexOf(c)
@@ -126,7 +128,7 @@ function AppInner() {
               key="question"
               onSubmit={handleQuestionSubmit}
               onSkip={handleQuestionSkip}
-              onBack={() => reading.goToPhase('intro')}
+              onBack={() => reading.goToPhase('spread')}
             />
           )}
 
@@ -137,7 +139,9 @@ function AppInner() {
               onSelect={handleSelectSpread}
               customCount={reading.customCount}
               onCustomCountChange={reading.setCustomCount}
-              onBack={() => reading.goToPhase('question')}
+              onBack={() => reading.goToPhase('intro')}
+              allowReversed={reading.allowReversed}
+              onToggleReversed={reading.toggleReversed}
             />
           )}
 
@@ -149,12 +153,13 @@ function AppInner() {
               spread={reading.spread}
               flippedIds={reading.flippedIds}
               onFlip={reading.flipCard}
+              onFlipAll={reading.flipAll}
               allFlipped={reading.allFlipped}
               flippedCount={reading.flippedCount}
               totalCards={reading.totalCards}
               question={reading.question}
               onRequestAI={handleRequestAI}
-              onBack={() => reading.goToPhase('spread')}
+              onBack={() => reading.goToPhase('question')}
             />
           )}
 

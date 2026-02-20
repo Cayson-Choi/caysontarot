@@ -3,8 +3,9 @@ import { CARD_BACK } from '../data/cards';
 import { useLanguage } from '../i18n/LanguageContext';
 
 export default function TarotCard({ card, isFlipped, onFlip, positionLabel, index }) {
-  const { lang } = useLanguage();
-  const cardName = lang === 'ko' ? card.nameKo : card.nameEn;
+  const { lang, t } = useLanguage();
+  const baseName = lang === 'ko' ? card.nameKo : card.nameEn;
+  const cardName = card.reversed ? `${baseName} (${t.reversed})` : baseName;
 
   const handleFlip = () => {
     if (isFlipped) return;
@@ -78,6 +79,7 @@ export default function TarotCard({ card, isFlipped, onFlip, positionLabel, inde
               src={card.image}
               alt={cardName}
               className="w-full h-full object-contain rounded-lg"
+              style={card.reversed ? { transform: 'rotate(180deg)' } : {}}
               draggable={false}
             />
             {/* Golden border glow for revealed card */}
