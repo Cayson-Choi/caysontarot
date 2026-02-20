@@ -31,7 +31,7 @@ export default function TarotCard({ card, isFlipped, onFlip, positionLabel, inde
         <motion.div
           className="relative w-[105px] h-[180px] md:w-[150px] md:h-[258px]"
           animate={{ rotateY: isFlipped ? 180 : 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
           style={{ transformStyle: 'preserve-3d' }}
         >
           {/* Back face */}
