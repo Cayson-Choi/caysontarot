@@ -61,7 +61,7 @@ export default function AIReadingPanel({
 
   return (
     <motion.div
-      className="min-h-dvh flex flex-col items-center px-4 py-8"
+      className="min-h-dvh flex flex-col items-center px-1 py-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

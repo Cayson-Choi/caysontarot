@@ -97,7 +97,7 @@ body {
   background-image: url('/aireading/aireading.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding: 15% 14% 16% 14%;
+  padding: 18% 15% 19% 15%;
   filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
 }
 
@@ -107,66 +107,66 @@ body {
 
 .parchment-ornament {
   text-align: center;
-  font-size: 10px;
-  letter-spacing: 6px;
-  color: #8b7355;
-  opacity: 0.7;
+  font-size: 9px;
+  letter-spacing: 5px;
+  color: #6b5535;
+  opacity: 0.6;
 }
 
 .parchment-title {
   font-family: 'Playfair Display', Georgia, serif;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
-  color: #4a3520;
-  margin: 10px 0 12px;
+  color: #1a1008;
+  margin: 6px 0 8px;
   letter-spacing: 0.5px;
 }
 
 .parchment-divider {
   height: 1px;
-  margin: 16px auto;
-  width: 70%;
+  margin: 10px auto;
+  width: 60%;
   background: linear-gradient(to right, transparent, #8b7355, transparent);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .parchment-question {
-  margin-bottom: 16px;
-  padding: 10px 14px;
+  margin-bottom: 10px;
+  padding: 8px 10px;
   background: rgba(120, 80, 20, 0.07);
-  border-radius: 10px;
-  border-left: 3px solid #8b7355;
+  border-radius: 8px;
+  border-left: 2px solid #8b7355;
 }
 
 .parchment-question-label {
-  font-size: 0.65rem;
+  font-size: 0.6rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #8b7355;
+  color: #6b5535;
   font-weight: 600;
 }
 
 .parchment-question-text {
-  font-size: 0.85rem;
-  color: #4a3520;
-  margin-top: 3px;
-  line-height: 1.5;
+  font-size: 0.8rem;
+  color: #1a1008;
+  margin-top: 2px;
+  line-height: 1.4;
 }
 
 .parchment-body {
   position: relative;
-  font-size: 0.875rem;
-  line-height: 1.9;
-  color: #3d2b1a;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: #0a0804;
   text-align: left;
   word-break: keep-all;
 }
 
 @media (min-width: 768px) {
-  .parchment-scroll { padding: 36px 32px; }
-  .parchment-title { font-size: 1.375rem; }
-  .parchment-body { font-size: 0.9375rem; }
+  .scroll-bg { padding: 16% 14% 17% 14%; }
+  .parchment-title { font-size: 1.125rem; }
+  .parchment-body { font-size: 0.875rem; }
 }
 
 /* ─── Custom Scrollbar ─── */

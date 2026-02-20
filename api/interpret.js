@@ -46,17 +46,17 @@ export default async function handler(req, res) {
     systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
 Write in plain text only. No markdown, no headers, no bold, no bullet points.
 First give a clear Yes or No answer, then explain why in a natural flowing paragraph. End with brief practical advice.
-Write 5-6 sentences.${reversedRule}${toneRule}`;
+Write 3-4 sentences.${reversedRule}${toneRule}`;
   } else if (isChoice) {
     systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
 Write in plain text only. No markdown, no headers, no bold, no bullet points.
 Write a natural flowing paragraph that compares both choices through the cards. Weave the card meanings naturally into the text without listing card names separately. Clearly indicate which choice the cards favor and why. End with specific, practical advice.
-Write 8-10 sentences.${reversedRule}${toneRule}`;
+Write 5-7 sentences.${reversedRule}${toneRule}`;
   } else {
     systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
 Write in plain text only. No markdown, no headers, no bold, no bullet points.
 Write a natural flowing paragraph that directly addresses the question. Weave all card meanings naturally into the text without listing each card separately. Connect the cards' energies together into one cohesive interpretation. End with specific, practical advice.
-Write 8-10 sentences.${reversedRule}${toneRule}`;
+Write 5-7 sentences.${reversedRule}${toneRule}`;
   }
 
   const userMessage = `${spread || 'Free Layout'} | ${question || 'General reading'}
