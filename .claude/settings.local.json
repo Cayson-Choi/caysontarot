@@ -1,9 +1,32 @@
 {
   "permissions": {
     "allow": [
-      "Bash(gh --version:*)",
-      "Bash(gh repo create:*)",
-      "Bash(vercel --version:*)"
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show --stat 40fcab9)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" diff --name-only 40fcab9 HEAD)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/app.js)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/index.html)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/styles.css)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/ai.js)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/api/interpret.py)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:web/vercel.json)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" status --short)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" ls-tree:*)",
+      "Bash(git -C \"D:/Antigravity/caysontarot\" show HEAD:spreads.py)",
+      "Bash(npm create:*)",
+      "Bash(npm init:*)",
+      "Bash(npm install:*)",
+      "Bash(npx vite build:*)",
+      "Bash(timeout 8 npx vite:*)",
+      "Bash(npx vite:*)",
+      "Bash(curl:*)",
+      "Bash(git add:*)",
+      "Bash(git rm:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(gh api:*)",
+      "Bash(npx vercel:*)",
+      "Bash(python3:*)",
+      "Bash(identify:*)"
     ]
   }
 }
