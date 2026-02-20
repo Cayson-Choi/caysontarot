@@ -36,7 +36,7 @@ export default async function handler(req, res) {
     .join('\n');
 
   const toneRule = isKo
-    ? '\n반드시 존댓말(~합니다, ~입니다, ~하세요)로만 작성하세요. 반말은 절대 사용하지 마세요.'
+    ? '\n한국어 반말(~해, ~야, ~거야, ~있어, ~해봐)로 친근하게 작성하세요. 존댓말은 사용하지 마세요. 친한 친구에게 타로 결과를 알려주듯 편하게 말하세요.'
     : '';
 
   const reversedRule = hasReversed ? ' Cards marked [Reversed] should be interpreted with their reversed meaning.' : '';
