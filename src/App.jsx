@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { LanguageProvider, useLanguage } from './i18n/LanguageContext';
 import { useTarotReading } from './hooks/useTarotReading';
@@ -60,6 +61,15 @@ function AppInner() {
   const handleRetry = () => {
     handleRequestAI();
   };
+
+  // Re-fetch AI reading when language changes on result screen
+  const prevLangRef = useRef(lang);
+  useEffect(() => {
+    if (prevLangRef.current !== lang && reading.phase === 'result' && ai.reading && !ai.loading) {
+      handleRequestAI();
+    }
+    prevLangRef.current = lang;
+  }, [lang]);
 
   return (
     <div className="relative min-h-dvh flex flex-col">
