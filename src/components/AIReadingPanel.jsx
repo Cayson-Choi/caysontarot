@@ -146,62 +146,37 @@ export default function AIReadingPanel({
               ))}
             </motion.div>
 
-            {/* SVG filter for paper grain texture */}
-            <svg className="absolute w-0 h-0" aria-hidden="true">
-              <defs>
-                <filter id="paper-grain">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="5" stitchTiles="stitch" result="noise" />
-                  <feDiffuseLighting in="noise" lightingColor="#d4be8c" surfaceScale="1.5" result="diffLight">
-                    <feDistantLight azimuth="45" elevation="55" />
-                  </feDiffuseLighting>
-                  <feComposite in="SourceGraphic" in2="diffLight" operator="arithmetic" k1="0.8" k2="0.3" k3="0.1" k4="0" />
-                </filter>
-              </defs>
-            </svg>
-
-            {/* Parchment scroll container */}
+            {/* Scroll with real background image */}
             <motion.div
-              className="parchment-scroll"
+              className="scroll-bg"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.7 }}
             >
-              {/* Texture layers */}
-              <div className="parchment-stains" />
-              <div className="parchment-creases" />
-              <div className="parchment-edge-top" />
-              <div className="parchment-edge-bottom" />
+              <div className="scroll-bg-content">
+                {/* Top ornament */}
+                <div className="parchment-ornament">✦ ✦ ✦</div>
 
-              {/* Top ornament */}
-              <div className="parchment-ornament relative z-10">
-                ✦ ✦ ✦
-              </div>
+                {/* Section title */}
+                <h2 className="parchment-title">{t.aiReadingTitle}</h2>
 
-              {/* Section title */}
-              <h2 className="parchment-title relative z-10">
-                {t.aiReadingTitle}
-              </h2>
+                {/* Decorative divider */}
+                <div className="parchment-divider" />
 
-              {/* Decorative divider */}
-              <div className="parchment-divider relative z-10" />
+                {/* Question */}
+                {question && (
+                  <div className="parchment-question">
+                    <span className="parchment-question-label">{t.yourQuestion}</span>
+                    <p className="parchment-question-text">{question}</p>
+                  </div>
+                )}
 
-              {/* Question */}
-              {question && (
-                <div className="parchment-question relative z-10">
-                  <span className="parchment-question-label">{t.yourQuestion}</span>
-                  <p className="parchment-question-text">{question}</p>
-                </div>
-              )}
+                {/* AI reading text */}
+                <div className="parchment-body">{reading}</div>
 
-              {/* AI reading text */}
-              <div className="parchment-body relative z-10">
-                {reading}
-              </div>
-
-              {/* Bottom ornament */}
-              <div className="parchment-divider relative z-10" />
-              <div className="parchment-ornament relative z-10">
-                ✦
+                {/* Bottom ornament */}
+                <div className="parchment-divider" />
+                <div className="parchment-ornament">✦</div>
               </div>
             </motion.div>
 
