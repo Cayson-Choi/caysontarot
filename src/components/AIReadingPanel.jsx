@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import ReactMarkdown from 'react-markdown';
 import { HiOutlineMail } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
 import LoadingSpinner from './LoadingSpinner';
@@ -58,6 +57,8 @@ export default function AIReadingPanel({
     window.open(`mailto:?subject=${subject}&body=${encodedBody}`);
   };
 
+  const positions = lang === 'ko' ? spread?.positionsKo : spread?.positionsEn;
+
   return (
     <motion.div
       className="min-h-dvh flex flex-col items-center px-4 py-8"
@@ -68,7 +69,7 @@ export default function AIReadingPanel({
     >
       <BackButton onClick={onBack} />
 
-      {/* Loading state - centered */}
+      {/* Loading state */}
       <AnimatePresence mode="wait">
         {loading && (
           <motion.div
@@ -104,7 +105,7 @@ export default function AIReadingPanel({
           </motion.div>
         )}
 
-        {/* Reading result - unfold animation */}
+        {/* Reading result */}
         {reading && !loading && (
           <motion.div
             key="result"
@@ -113,148 +114,166 @@ export default function AIReadingPanel({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
-            {/* Title */}
-            <motion.h2
-              className="font-serif text-xl md:text-2xl font-semibold mb-6 gold-gradient-text text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+            {/* Card thumbnails row */}
+            <motion.div
+              className="flex flex-wrap justify-center gap-2 mb-5"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
             >
-              {t.aiReadingTitle}
-            </motion.h2>
-
-            {/* Visible content */}
-            <div>
-              {/* Question reminder */}
-              {question && (
+              {cards.map((card, i) => (
                 <motion.div
-                  className="mb-4 px-4 py-2.5 rounded-xl bg-white/5 border border-white/10"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3, duration: 0.5 }}
+                  key={card.id}
+                  className="flex flex-col items-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 + i * 0.08, duration: 0.4 }}
                 >
-                  <p className="text-xs text-amber-400/60 mb-0.5">{t.yourQuestion}</p>
-                  <p className="text-sm text-white/70">{question}</p>
+                  <img
+                    src={card.image}
+                    alt={lang === 'ko' ? card.nameKo : card.nameEn}
+                    className="w-14 h-[96px] md:w-18 md:h-[124px] rounded-md object-contain
+                               border border-amber-400/20 shadow-lg shadow-amber-900/20"
+                    style={card.reversed ? { transform: 'rotate(180deg)' } : {}}
+                  />
+                  <span className="text-[9px] md:text-[10px] text-amber-300/50 mt-1 max-w-[56px] truncate text-center">
+                    {lang === 'ko' ? card.nameKo : card.nameEn}
+                  </span>
+                  {positions && positions[i] && (
+                    <span className="text-[8px] text-white/25">{positions[i]}</span>
+                  )}
                 </motion.div>
+              ))}
+            </motion.div>
+
+            {/* Parchment scroll container */}
+            <motion.div
+              className="parchment-scroll"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.7 }}
+            >
+              {/* Top ornament */}
+              <div className="parchment-ornament">
+                ✦ ✦ ✦
+              </div>
+
+              {/* Section title */}
+              <h2 className="parchment-title">
+                {t.aiReadingTitle}
+              </h2>
+
+              {/* Decorative divider */}
+              <div className="parchment-divider" />
+
+              {/* Question */}
+              {question && (
+                <div className="parchment-question">
+                  <span className="parchment-question-label">{t.yourQuestion}</span>
+                  <p className="parchment-question-text">{question}</p>
+                </div>
               )}
 
-              {/* Card thumbnails */}
-              <motion.div
-                className="flex flex-wrap justify-center gap-2 mb-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-              >
-                {cards.map((card, i) => (
-                  <motion.div
-                    key={card.id}
-                    className="flex flex-col items-center"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 + i * 0.08, duration: 0.4 }}
-                  >
-                    <img
-                      src={card.image}
-                      alt={lang === 'ko' ? card.nameKo : card.nameEn}
-                      className="w-12 h-[82px] md:w-16 md:h-[110px] rounded object-contain
-                                 border border-white/10"
-                    />
-                    <span className="text-[9px] md:text-[10px] text-white/40 mt-0.5 max-w-[50px] truncate text-center">
-                      {lang === 'ko' ? card.nameKo : card.nameEn}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
+              {/* AI reading text */}
+              <div className="parchment-body">
+                {reading}
+              </div>
 
-              {/* AI interpretation text */}
-              <motion.div
-                className="glass-panel rounded-2xl p-5 md:p-6"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-              >
-                <div className="prose-tarot">
-                  <ReactMarkdown>{reading}</ReactMarkdown>
-                </div>
-              </motion.div>
-            </div>
+              {/* Bottom ornament */}
+              <div className="parchment-divider" />
+              <div className="parchment-ornament">
+                ✦
+              </div>
+            </motion.div>
 
-            {/* Hidden capture area - flat static version for screenshot */}
+            {/* Hidden capture area */}
             <div
               ref={captureRef}
               style={{
                 position: 'absolute',
                 left: '-9999px',
                 top: 0,
-                backgroundColor: '#0a0e1a',
-                padding: '24px',
-                borderRadius: '16px',
                 width: '500px',
                 fontFamily: 'Inter, system-ui, sans-serif',
-                color: '#e2e8f0',
               }}
             >
-              {/* Title */}
-              <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-                <h2 style={{
-                  fontFamily: 'Playfair Display, Georgia, serif',
-                  fontSize: '20px',
-                  fontWeight: 600,
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}>
-                  {t.aiReadingTitle}
-                </h2>
-              </div>
-
-              {/* Question */}
-              {question && (
-                <div style={{
-                  marginBottom: '16px',
-                  padding: '10px 16px',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.08)',
-                }}>
-                  <p style={{ fontSize: '11px', color: 'rgba(251,191,36,0.6)', marginBottom: '2px' }}>{t.yourQuestion}</p>
-                  <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.7)' }}>{question}</p>
-                </div>
-              )}
-
-              {/* Card images */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginBottom: '20px' }}>
-                {cards.map((card) => (
-                  <div key={card.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <img
-                      src={card.image}
-                      alt={lang === 'ko' ? card.nameKo : card.nameEn}
-                      style={{ width: '60px', height: '103px', objectFit: 'contain', borderRadius: '4px' }}
-                      crossOrigin="anonymous"
-                    />
-                    <span style={{ fontSize: '9px', color: 'rgba(255,255,255,0.4)', marginTop: '2px', maxWidth: '60px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', textAlign: 'center', display: 'block' }}>
-                      {lang === 'ko' ? card.nameKo : card.nameEn}
-                    </span>
-                  </div>
-                ))}
-              </div>
-
-              {/* AI text as plain text */}
+              {/* Parchment background for capture */}
               <div style={{
-                padding: '20px',
+                background: 'linear-gradient(180deg, #2a2218 0%, #1e1a14 100%)',
+                padding: '28px 24px',
                 borderRadius: '16px',
-                backgroundColor: 'rgba(255,255,255,0.04)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                fontSize: '13px',
-                lineHeight: '1.7',
-                color: 'rgba(255,255,255,0.75)',
-                whiteSpace: 'pre-wrap',
+                border: '1px solid rgba(251,191,36,0.15)',
               }}>
-                {reading}
+                {/* Card images */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center', marginBottom: '20px' }}>
+                  {cards.map((card) => (
+                    <div key={card.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <img
+                        src={card.image}
+                        alt={lang === 'ko' ? card.nameKo : card.nameEn}
+                        style={{
+                          width: '60px', height: '103px', objectFit: 'contain', borderRadius: '4px',
+                          ...(card.reversed ? { transform: 'rotate(180deg)' } : {}),
+                        }}
+                        crossOrigin="anonymous"
+                      />
+                      <span style={{ fontSize: '9px', color: 'rgba(251,191,36,0.5)', marginTop: '4px' }}>
+                        {lang === 'ko' ? card.nameKo : card.nameEn}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Parchment area */}
+                <div style={{
+                  background: 'linear-gradient(170deg, #f5e6c8 0%, #e8d5a8 30%, #dcc99a 70%, #d4be8c 100%)',
+                  borderRadius: '12px',
+                  padding: '24px 20px',
+                  border: '1px solid rgba(180,150,90,0.3)',
+                  boxShadow: 'inset 0 2px 8px rgba(120,80,20,0.15)',
+                }}>
+                  {/* Title */}
+                  <div style={{ textAlign: 'center', marginBottom: '12px' }}>
+                    <span style={{ fontSize: '10px', color: '#8b7355', letterSpacing: '4px' }}>✦ ✦ ✦</span>
+                    <h2 style={{
+                      fontFamily: 'Playfair Display, Georgia, serif',
+                      fontSize: '18px', fontWeight: 700,
+                      color: '#4a3520', margin: '8px 0',
+                    }}>{t.aiReadingTitle}</h2>
+                    <div style={{
+                      height: '1px', margin: '0 auto', width: '60%',
+                      background: 'linear-gradient(to right, transparent, #8b7355, transparent)',
+                    }} />
+                  </div>
+
+                  {/* Question */}
+                  {question && (
+                    <div style={{
+                      marginBottom: '14px', padding: '8px 12px',
+                      background: 'rgba(120,80,20,0.08)', borderRadius: '8px',
+                      borderLeft: '3px solid #8b7355',
+                    }}>
+                      <span style={{ fontSize: '10px', color: '#8b7355' }}>{t.yourQuestion}</span>
+                      <p style={{ fontSize: '13px', color: '#4a3520', margin: '2px 0 0' }}>{question}</p>
+                    </div>
+                  )}
+
+                  {/* Reading text */}
+                  <div style={{
+                    fontSize: '13px', lineHeight: '1.8', color: '#3d2b1a',
+                    whiteSpace: 'pre-wrap',
+                  }}>
+                    {reading}
+                  </div>
+
+                  <div style={{ textAlign: 'center', marginTop: '14px' }}>
+                    <span style={{ fontSize: '10px', color: '#8b7355' }}>✦</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Action buttons (outside capture area) */}
+            {/* Action buttons */}
             <motion.div
               className="flex gap-3 items-center justify-center mt-6"
               initial={{ opacity: 0, y: 20 }}

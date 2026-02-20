@@ -90,6 +90,96 @@ body {
   margin: 1.5em 0;
 }
 
+/* ─── Parchment Scroll ─── */
+.parchment-scroll {
+  position: relative;
+  background: linear-gradient(170deg, #f5e6c8 0%, #e8d5a8 30%, #dcc99a 70%, #d4be8c 100%);
+  border-radius: 16px;
+  padding: 28px 24px;
+  border: 1px solid rgba(180, 150, 90, 0.3);
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 2px 8px rgba(120, 80, 20, 0.15),
+    inset 0 -2px 6px rgba(120, 80, 20, 0.1);
+}
+
+.parchment-scroll::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(180, 140, 60, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 90%, rgba(160, 120, 50, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(100, 70, 30, 0.03) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.parchment-ornament {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 6px;
+  color: #8b7355;
+  opacity: 0.7;
+}
+
+.parchment-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  text-align: center;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #4a3520;
+  margin: 10px 0 12px;
+  letter-spacing: 0.5px;
+}
+
+.parchment-divider {
+  height: 1px;
+  margin: 16px auto;
+  width: 70%;
+  background: linear-gradient(to right, transparent, #8b7355, transparent);
+  opacity: 0.5;
+}
+
+.parchment-question {
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background: rgba(120, 80, 20, 0.07);
+  border-radius: 10px;
+  border-left: 3px solid #8b7355;
+}
+
+.parchment-question-label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #8b7355;
+  font-weight: 600;
+}
+
+.parchment-question-text {
+  font-size: 0.85rem;
+  color: #4a3520;
+  margin-top: 3px;
+  line-height: 1.5;
+}
+
+.parchment-body {
+  position: relative;
+  font-size: 0.875rem;
+  line-height: 1.9;
+  color: #3d2b1a;
+  text-align: justify;
+  word-break: keep-all;
+}
+
+@media (min-width: 768px) {
+  .parchment-scroll { padding: 36px 32px; }
+  .parchment-title { font-size: 1.375rem; }
+  .parchment-body { font-size: 0.9375rem; }
+}
+
 /* ─── Custom Scrollbar ─── */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
