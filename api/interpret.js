@@ -36,33 +36,28 @@ export default async function handler(req, res) {
     .join('\n');
 
   const toneRule = isKo
-    ? '\nTone: 반드시 존댓말(~합니다, ~입니다, ~하세요)로만 작성하세요. 반말(~해, ~야, ~거야)은 절대 사용하지 마세요. 처음부터 끝까지 일관된 존댓말을 유지하세요.'
+    ? '\n반드시 존댓말(~합니다, ~입니다, ~하세요)로만 작성하세요. 반말은 절대 사용하지 마세요.'
     : '';
 
-  let structureGuide;
+  const reversedRule = hasReversed ? ' Cards marked [Reversed] should be interpreted with their reversed meaning.' : '';
+
+  let systemPrompt;
   if (isYesNo) {
-    structureGuide = `Structure:
-1. **Yes or No**: Give a clear Yes/No answer first based on the card's energy
-2. **Card meaning**: Explain why this card points to that answer (2-3 sentences)
-3. **Advice**: specific, actionable guidance`;
+    systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
+Write in plain text only. No markdown, no headers, no bold, no bullet points.
+First give a clear Yes or No answer, then explain why in a natural flowing paragraph. End with brief practical advice.
+Write 5-6 sentences.${reversedRule}${toneRule}`;
   } else if (isChoice) {
-    structureGuide = `Structure:
-1. **Choice A**: Interpret the first card representing Choice A (2-3 sentences)
-2. **Choice B**: Interpret the second card representing Choice B (2-3 sentences)
-3. **Comparison**: Compare both paths and which choice the cards favor
-4. **Advice**: specific, actionable guidance on making this decision`;
+    systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
+Write in plain text only. No markdown, no headers, no bold, no bullet points.
+Write a natural flowing paragraph that compares both choices through the cards. Weave the card meanings naturally into the text without listing card names separately. Clearly indicate which choice the cards favor and why. End with specific, practical advice.
+Write 8-10 sentences.${reversedRule}${toneRule}`;
   } else {
-    structureGuide = `Structure:
-1. **Each card**: meaning by position (2-3 sentences each)
-2. **Card interactions**: how they connect and overall energy flow
-3. **Advice**: specific, actionable guidance (no vague platitudes)`;
+    systemPrompt = `You are a tarot reader. Respond in ${outputLang}.
+Write in plain text only. No markdown, no headers, no bold, no bullet points.
+Write a natural flowing paragraph that directly addresses the question. Weave all card meanings naturally into the text without listing each card separately. Connect the cards' energies together into one cohesive interpretation. End with specific, practical advice.
+Write 8-10 sentences.${reversedRule}${toneRule}`;
   }
-
-  const systemPrompt = `You are a Rider-Waite tarot master. Respond in ${outputLang} using markdown.
-
-${structureGuide}
-
-Rules: Use **bold** for card names. Use ## headers. Be concise and specific.${hasReversed ? ' Cards marked [Reversed] should be interpreted with their reversed meaning.' : ''}${toneRule}`;
 
   const userMessage = `${spread || 'Free Layout'} | ${question || 'General reading'}
 ${cardList}`;
