@@ -93,8 +93,8 @@ body {
 /* ─── Scroll Background Image ─── */
 .scroll-bg {
   position: relative;
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: calc(100vw - 32px);
+  margin-left: calc(-50vw + 50% + 16px);
   border-style: solid;
   border-width: 30px 0;
   border-image-source: url('/aireading/yangpigi.png');
