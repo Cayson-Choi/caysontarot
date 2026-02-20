@@ -116,6 +116,7 @@ function AppInner() {
               key="question"
               onSubmit={handleQuestionSubmit}
               onSkip={handleQuestionSkip}
+              onBack={() => reading.goToPhase('intro')}
             />
           )}
 
@@ -126,6 +127,7 @@ function AppInner() {
               onSelect={handleSelectSpread}
               customCount={reading.customCount}
               onCustomCountChange={reading.setCustomCount}
+              onBack={() => reading.goToPhase('question')}
             />
           )}
 
@@ -142,6 +144,7 @@ function AppInner() {
               totalCards={reading.totalCards}
               question={reading.question}
               onRequestAI={handleRequestAI}
+              onBack={() => reading.goToPhase('spread')}
             />
           )}
 
@@ -154,6 +157,10 @@ function AppInner() {
               error={ai.error}
               onRetry={handleRetry}
               onNewReading={handleNewReading}
+              onBack={() => {
+                ai.clearReading();
+                reading.goToPhase('reading');
+              }}
               cards={reading.drawnCards}
               spread={reading.spread}
               question={reading.question}

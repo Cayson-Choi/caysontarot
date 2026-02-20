@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { HiOutlineArrowLeft } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
 import { spreads } from '../data/spreads';
 
@@ -13,7 +14,7 @@ const item = {
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-export default function CardSelector({ onSelect, customCount, onCustomCountChange }) {
+export default function CardSelector({ onSelect, customCount, onCustomCountChange, onBack }) {
   const { lang, t } = useLanguage();
   const [hoveredId, setHoveredId] = useState(null);
 
@@ -25,6 +26,16 @@ export default function CardSelector({ onSelect, customCount, onCustomCountChang
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
     >
+      {/* Back button */}
+      <button
+        onClick={onBack}
+        className="self-start mb-4 flex items-center gap-1 text-xs text-white/40
+                   hover:text-white/60 transition-colors active:scale-95"
+      >
+        <HiOutlineArrowLeft className="text-sm" />
+        {t.back}
+      </button>
+
       {/* Title */}
       <h2 className="font-serif text-xl md:text-2xl font-semibold mb-1 gold-gradient-text">
         {t.selectSpread}
