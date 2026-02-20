@@ -94,26 +94,105 @@ body {
 .parchment-scroll {
   position: relative;
   background: linear-gradient(170deg, #f5e6c8 0%, #e8d5a8 30%, #dcc99a 70%, #d4be8c 100%);
-  border-radius: 16px;
+  border-radius: 12px;
   padding: 28px 24px;
-  border: 1px solid rgba(180, 150, 90, 0.3);
+  border: 1px solid rgba(140, 110, 60, 0.35);
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.4),
-    0 1px 3px rgba(0, 0, 0, 0.2),
-    inset 0 2px 8px rgba(120, 80, 20, 0.15),
-    inset 0 -2px 6px rgba(120, 80, 20, 0.1);
+    0 6px 32px rgba(0, 0, 0, 0.5),
+    0 2px 6px rgba(0, 0, 0, 0.3),
+    inset 0 2px 8px rgba(120, 80, 20, 0.2),
+    inset 0 -2px 6px rgba(120, 80, 20, 0.15);
+  overflow: hidden;
 }
 
+/* Paper grain texture via SVG noise */
 .parchment-scroll::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 12px;
+  filter: url(#paper-grain);
   background:
-    radial-gradient(ellipse at 20% 10%, rgba(180, 140, 60, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 90%, rgba(160, 120, 50, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(100, 70, 30, 0.03) 0%, transparent 70%);
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(120, 80, 20, 0.015) 3px,
+      rgba(120, 80, 20, 0.015) 4px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 5px,
+      rgba(100, 70, 20, 0.01) 5px,
+      rgba(100, 70, 20, 0.01) 6px
+    );
+  opacity: 0.8;
   pointer-events: none;
+}
+
+/* Aged/burned edges vignette */
+.parchment-scroll::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background:
+    radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(80, 50, 15, 0.12) 75%, rgba(50, 30, 5, 0.3) 100%);
+  pointer-events: none;
+}
+
+/* Stain and age spots */
+.parchment-stains {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 30% at 15% 20%, rgba(150, 100, 30, 0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 25% 35% at 85% 75%, rgba(130, 90, 25, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 20% at 60% 10%, rgba(140, 95, 30, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 20% 25% at 30% 85%, rgba(120, 80, 20, 0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 35% 40% at 70% 45%, rgba(110, 75, 20, 0.04) 0%, transparent 60%);
+}
+
+/* Torn/worn edge effect (top & bottom subtle roughness) */
+.parchment-edge-top,
+.parchment-edge-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 8px;
+  pointer-events: none;
+  opacity: 0.4;
+}
+.parchment-edge-top {
+  top: -1px;
+  background: linear-gradient(180deg, rgba(50,30,10,0.3) 0%, transparent 100%);
+  mask-image: url("data:image/svg+xml,%3Csvg width='400' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,4 Q10,0 20,3 T40,5 T60,2 T80,4 T100,3 T120,5 T140,2 T160,4 T180,3 T200,5 T220,2 T240,4 T260,3 T280,5 T300,2 T320,4 T340,3 T360,5 T380,2 T400,4 L400,8 L0,8 Z' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='400' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,4 Q10,0 20,3 T40,5 T60,2 T80,4 T100,3 T120,5 T140,2 T160,4 T180,3 T200,5 T220,2 T240,4 T260,3 T280,5 T300,2 T320,4 T340,3 T360,5 T380,2 T400,4 L400,8 L0,8 Z' fill='white'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+.parchment-edge-bottom {
+  bottom: -1px;
+  background: linear-gradient(0deg, rgba(50,30,10,0.3) 0%, transparent 100%);
+  mask-image: url("data:image/svg+xml,%3Csvg width='400' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,4 Q10,8 20,5 T40,3 T60,6 T80,4 T100,5 T120,3 T140,6 T160,4 T180,5 T200,3 T220,6 T240,4 T260,5 T280,3 T300,6 T320,4 T340,5 T360,3 T380,6 T400,4 L400,0 L0,0 Z' fill='white'/%3E%3C/svg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='400' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,4 Q10,8 20,5 T40,3 T60,6 T80,4 T100,5 T120,3 T140,6 T160,4 T180,5 T200,3 T220,6 T240,4 T260,5 T280,3 T300,6 T320,4 T340,5 T360,3 T380,6 T400,4 L400,0 L0,0 Z' fill='white'/%3E%3C/svg%3E");
+  mask-size: 100% 100%;
+  -webkit-mask-size: 100% 100%;
+}
+
+/* Fold crease lines */
+.parchment-creases {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, transparent 32%, rgba(100,70,20,0.06) 33%, transparent 34%),
+    linear-gradient(90deg, transparent 65%, rgba(100,70,20,0.05) 66%, transparent 67%),
+    linear-gradient(0deg, transparent 48%, rgba(100,70,20,0.04) 49%, transparent 50%);
 }
 
 .parchment-ornament {
