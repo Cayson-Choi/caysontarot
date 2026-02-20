@@ -1,5 +1,5 @@
 export default {
-  title: '타로 리딩',
+  title: '하림 타로',
   subtitle: '별빛이 비추는 당신의 운명',
   beginReading: '리딩 시작하기',
   questionTitle: '마음속 질문을 떠올려 보세요',
