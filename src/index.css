@@ -160,7 +160,7 @@ body {
 .parchment-body {
   position: relative;
   font-family: 'Nanum Pen Script', cursive;
-  font-size: 1.4rem;
+  font-size: 2.1rem;
   line-height: 1.3;
   color: #0a0804;
   text-align: left;
@@ -177,7 +177,7 @@ body {
   .scroll-bg { padding: 12px 10%; }
   .scroll-bg--compact { padding: 8px 10%; }
   .parchment-title { font-size: 3rem; }
-  .parchment-body { font-size: 1.5rem; }
+  .parchment-body { font-size: 2.25rem; }
 }
 
 /* ─── Custom Scrollbar ─── */
