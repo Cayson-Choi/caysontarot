@@ -3,10 +3,13 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
 import BackButton from './BackButton';
 
-export default function QuestionInput({ onSubmit, onSkip, onBack }) {
+export default function QuestionInput({ onSubmit, onSkip, onBack, spreadId }) {
   const [question, setQuestion] = useState('');
+  const [choiceA, setChoiceA] = useState('');
+  const [choiceB, setChoiceB] = useState('');
   const [focused, setFocused] = useState(false);
   const { t } = useLanguage();
+  const isChoice = spreadId === 'choice';
 
   return (
     <motion.div
@@ -30,30 +33,59 @@ export default function QuestionInput({ onSubmit, onSkip, onBack }) {
           </h2>
           <p className="text-white/40 text-xs text-center mb-6">{t.questionPlaceholder}</p>
 
-          {/* Textarea */}
-          <div className="relative mb-6">
-            <textarea
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              placeholder={t.questionPlaceholder}
-              rows={4}
-              className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3
-                         text-white/90 text-sm placeholder-white/25 resize-none
-                         focus:outline-none transition-all duration-500
-                         focus:border-amber-400/50 focus:bg-white/8"
-            />
-            {/* Focus glow */}
-            <motion.div
-              className="absolute -inset-px rounded-xl pointer-events-none"
-              style={{
-                background: 'linear-gradient(135deg, rgba(251,191,36,0.3), rgba(168,85,247,0.3))',
-              }}
-              animate={{ opacity: focused ? 0.6 : 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
+          {/* Input fields */}
+          {isChoice ? (
+            <div className="flex flex-col gap-3 mb-6">
+              <div className="relative">
+                <label className="text-xs text-amber-300/70 mb-1 block">{t.choiceA}</label>
+                <input
+                  value={choiceA}
+                  onChange={(e) => setChoiceA(e.target.value)}
+                  placeholder={t.choiceAPlaceholder}
+                  className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3
+                             text-white/90 text-sm placeholder-white/25
+                             focus:outline-none transition-all duration-500
+                             focus:border-amber-400/50 focus:bg-white/8"
+                />
+              </div>
+              <div className="relative">
+                <label className="text-xs text-amber-300/70 mb-1 block">{t.choiceB}</label>
+                <input
+                  value={choiceB}
+                  onChange={(e) => setChoiceB(e.target.value)}
+                  placeholder={t.choiceBPlaceholder}
+                  className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3
+                             text-white/90 text-sm placeholder-white/25
+                             focus:outline-none transition-all duration-500
+                             focus:border-amber-400/50 focus:bg-white/8"
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="relative mb-6">
+              <textarea
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                placeholder={t.questionPlaceholder}
+                rows={4}
+                className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3
+                           text-white/90 text-sm placeholder-white/25 resize-none
+                           focus:outline-none transition-all duration-500
+                           focus:border-amber-400/50 focus:bg-white/8"
+              />
+              {/* Focus glow */}
+              <motion.div
+                className="absolute -inset-px rounded-xl pointer-events-none"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(251,191,36,0.3), rgba(168,85,247,0.3))',
+                }}
+                animate={{ opacity: focused ? 0.6 : 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          )}
 
           {/* Action buttons */}
           <div className="flex gap-3">
@@ -70,7 +102,16 @@ export default function QuestionInput({ onSubmit, onSkip, onBack }) {
               {t.skip}
             </motion.button>
             <motion.button
-              onClick={() => onSubmit(question)}
+              onClick={() => {
+                if (isChoice) {
+                  const combined = choiceA || choiceB
+                    ? `A: ${choiceA || '-'} / B: ${choiceB || '-'}`
+                    : '';
+                  onSubmit(combined);
+                } else {
+                  onSubmit(question);
+                }
+              }}
               className="flex-1 py-3 rounded-xl text-sm font-medium
                          bg-white/[0.06] backdrop-blur-md border border-amber-400/25
                          text-amber-300/90 transition-all duration-300

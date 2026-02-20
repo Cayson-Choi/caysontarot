@@ -129,6 +129,7 @@ function AppInner() {
               onSubmit={handleQuestionSubmit}
               onSkip={handleQuestionSkip}
               onBack={() => reading.goToPhase('spread')}
+              spreadId={reading.spread?.id}
             />
           )}
 
