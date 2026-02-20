@@ -58,6 +58,7 @@ export default function AIReadingPanel({
   };
 
   const positions = lang === 'ko' ? spread?.positionsKo : spread?.positionsEn;
+  const isYesNo = spread?.id === 'yesno';
 
   return (
     <motion.div
@@ -148,7 +149,7 @@ export default function AIReadingPanel({
 
             {/* Scroll with real background image */}
             <motion.div
-              className="scroll-bg"
+              className={`scroll-bg${isYesNo ? ' scroll-bg--compact' : ''}`}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.7 }}
@@ -165,10 +166,9 @@ export default function AIReadingPanel({
 
                 {/* Question */}
                 {question && (
-                  <div className="parchment-question">
-                    <span className="parchment-question-label">{t.yourQuestion}</span>
-                    <p className="parchment-question-text">{question}</p>
-                  </div>
+                  <p className="parchment-body" style={{ marginBottom: '10px', fontStyle: 'italic', opacity: 0.7 }}>
+                    Q. {question}
+                  </p>
                 )}
 
                 {/* AI reading text */}

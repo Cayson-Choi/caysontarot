@@ -94,7 +94,7 @@ body {
 .scroll-bg {
   position: relative;
   width: 100%;
-  background-image: url('/aireading/aireading.png');
+  background-image: url('/aireading/yangpigi.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
   padding: 18% 15% 19% 15%;
@@ -156,17 +156,23 @@ body {
 
 .parchment-body {
   position: relative;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   line-height: 1.7;
   color: #0a0804;
   text-align: left;
   word-break: keep-all;
 }
 
+/* ─── Compact scroll for Yes/No (shorter answers) ─── */
+.scroll-bg--compact {
+  padding: 14% 15% 15% 15%;
+}
+
 @media (min-width: 768px) {
   .scroll-bg { padding: 16% 14% 17% 14%; }
+  .scroll-bg--compact { padding: 12% 14% 13% 14%; }
   .parchment-title { font-size: 1.125rem; }
-  .parchment-body { font-size: 0.875rem; }
+  .parchment-body { font-size: 1rem; }
 }
 
 /* ─── Custom Scrollbar ─── */
