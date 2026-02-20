@@ -1,5 +1,5 @@
 export default {
-  title: 'Harim Tarot',
+  title: 'Cayson Tarot',
   subtitle: 'Your destiny illuminated by starlight',
   beginReading: 'Begin Reading',
   questionTitle: 'Focus on your question',
