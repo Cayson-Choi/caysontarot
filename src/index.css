@@ -100,7 +100,7 @@ body {
   border-image-source: url('/aireading/yangpigi.png');
   border-image-slice: 15% 18% 15% 18% fill;
   border-image-repeat: stretch;
-  padding: 12px 10%;
+  padding: 12px 5%;
   filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
 }
 
@@ -170,12 +170,12 @@ body {
 /* ─── Compact scroll for Yes/No (shorter answers) ─── */
 .scroll-bg--compact {
   border-width: 50px 0;
-  padding: 8px 10%;
+  padding: 8px 5%;
 }
 
 @media (min-width: 768px) {
-  .scroll-bg { padding: 12px 10%; }
-  .scroll-bg--compact { padding: 8px 10%; }
+  .scroll-bg { padding: 12px 5%; }
+  .scroll-bg--compact { padding: 8px 5%; }
   .parchment-title { font-size: 3rem; }
   .parchment-body { font-size: 2.25rem; }
 }
