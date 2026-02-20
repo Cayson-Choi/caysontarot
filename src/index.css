@@ -95,10 +95,12 @@ body {
   position: relative;
   width: 100vw;
   margin-left: calc(-50vw + 50%);
-  background-image: url('/aireading/yangpigi.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  padding: 8% 18% 9% 18%;
+  border-style: solid;
+  border-width: 30px 0;
+  border-image-source: url('/aireading/yangpigi.png');
+  border-image-slice: 15% 0 15% 0 fill;
+  border-image-repeat: stretch;
+  padding: 12px 16%;
   filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
 }
 
@@ -167,12 +169,13 @@ body {
 
 /* ─── Compact scroll for Yes/No (shorter answers) ─── */
 .scroll-bg--compact {
-  padding: 7% 18% 8% 18%;
+  border-width: 25px 0;
+  padding: 8px 16%;
 }
 
 @media (min-width: 768px) {
-  .scroll-bg { padding: 7% 16% 8% 16%; }
-  .scroll-bg--compact { padding: 6% 16% 7% 16%; }
+  .scroll-bg { padding: 12px 14%; }
+  .scroll-bg--compact { padding: 8px 14%; }
   .parchment-title { font-size: 3rem; }
   .parchment-body { font-size: 1.5rem; }
 }
