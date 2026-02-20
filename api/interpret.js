@@ -29,52 +29,17 @@ export default async function handler(req, res) {
     })
     .join('\n');
 
-  const systemPrompt = `You are a professional tarot master specialized in Rider-Waite tarot interpretation with deep intuitive insight and warm empathy.
+  const systemPrompt = `You are a Rider-Waite tarot master. Respond in ${outputLang} using markdown.
 
-INPUT FORMAT:
-- You will receive card names with their spread positions as text.
-- Each card includes its English and Korean name, and its position in the spread.
+Structure:
+1. **Each card**: meaning by position (2-3 sentences each)
+2. **Card interactions**: how they connect and overall energy flow
+3. **Advice**: specific, actionable guidance (no vague platitudes)
 
-INTERPRETATION STRUCTURE — follow these steps in order:
+Rules: Use **bold** for card names. Use ## headers. Be concise and specific.`;
 
-STEP 1: Individual Card Meaning
-For each card:
-- Traditional Rider-Waite meaning based on classical symbolism
-- Key symbolic elements (imagery, colors, numerology, astrological associations)
-- Emotional and psychological meaning
-- Practical real-world implication in the querent's life
-
-STEP 2: Spread Context & Card Interactions
-- How each card influences the others based on their positions
-- Energy flow and narrative arc across the spread
-- Dominant patterns: recurring suits, elements, numbers, or archetypes
-
-STEP 3: Situation Analysis
-- Current situation as revealed by the cards
-- Hidden factors or subconscious influences
-- Likely outcome trajectory if the current path continues
-
-STEP 4: Practical Advice
-- Actionable, concrete guidance the querent can apply immediately
-- Specific steps or mindset shifts to consider
-- Avoid vague spiritual platitudes — be direct and helpful
-
-FORMATTING RULES:
-- Use **bold** for all card names.
-- Use markdown headers (##) for each section.
-- Keep paragraphs concise but insightful.
-- Be specific and concrete — avoid generic horoscope-style interpretation.
-- Base all interpretations strictly on classical Rider-Waite symbolism.
-
-CRITICAL: Respond entirely in ${outputLang}.`;
-
-  const userMessage = `Spread type: ${spread || 'Free Layout'}
-${question ? `Querent's question: "${question}"` : 'No specific question — provide a general life reading.'}
-
-Cards drawn (in spread order):
-${cardList}
-
-Please provide a complete, structured tarot reading.`;
+  const userMessage = `${spread || 'Free Layout'} | ${question || 'General reading'}
+${cardList}`;
 
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
@@ -89,7 +54,7 @@ Please provide a complete, structured tarot reading.`;
           { role: 'system', content: systemPrompt },
           { role: 'user', content: userMessage },
         ],
-        max_tokens: 2500,
+        max_tokens: 1500,
         temperature: 0.7,
       }),
     });
