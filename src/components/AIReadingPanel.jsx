@@ -110,7 +110,7 @@ export default function AIReadingPanel({
         {reading && !loading && (
           <motion.div
             key="result"
-            className="w-full max-w-2xl px-1"
+            className="w-full px-1"
             initial={{ opacity: 0, y: 60, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -166,7 +166,7 @@ export default function AIReadingPanel({
 
                 {/* Question */}
                 {question && (
-                  <p className="parchment-body" style={{ marginBottom: '10px', fontStyle: 'italic', opacity: 0.7 }}>
+                  <p className="parchment-body" style={{ marginBottom: '10px', opacity: 0.7 }}>
                     Q. {question}
                   </p>
                 )}

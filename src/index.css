@@ -97,7 +97,7 @@ body {
   background-image: url('/aireading/yangpigi.png');
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  padding: 23% 20% 25% 20%;
+  padding: 26% 14% 28% 14%;
   filter: drop-shadow(0 8px 30px rgba(0, 0, 0, 0.5));
 }
 
@@ -114,10 +114,10 @@ body {
 }
 
 .parchment-title {
-  font-family: 'Playfair Display', Georgia, serif;
+  font-family: 'Nanum Pen Script', cursive;
   text-align: center;
-  font-size: 1rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 400;
   color: #1a1008;
   margin: 6px 0 8px;
   letter-spacing: 0.5px;
@@ -156,6 +156,7 @@ body {
 
 .parchment-body {
   position: relative;
+  font-family: 'Nanum Pen Script', cursive;
   font-size: 1.4rem;
   line-height: 1.7;
   color: #0a0804;
@@ -165,12 +166,12 @@ body {
 
 /* ─── Compact scroll for Yes/No (shorter answers) ─── */
 .scroll-bg--compact {
-  padding: 18% 20% 20% 20%;
+  padding: 22% 14% 24% 14%;
 }
 
 @media (min-width: 768px) {
-  .scroll-bg { padding: 20% 18% 22% 18%; }
-  .scroll-bg--compact { padding: 16% 18% 18% 18%; }
+  .scroll-bg { padding: 22% 12% 24% 12%; }
+  .scroll-bg--compact { padding: 18% 12% 20% 12%; }
   .parchment-title { font-size: 1.25rem; }
   .parchment-body { font-size: 1.5rem; }
 }
