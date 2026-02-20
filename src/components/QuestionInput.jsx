@@ -7,7 +7,6 @@ export default function QuestionInput({ onSubmit, onSkip, onBack, spreadId }) {
   const [question, setQuestion] = useState('');
   const [choiceA, setChoiceA] = useState('');
   const [choiceB, setChoiceB] = useState('');
-  const [focused, setFocused] = useState(false);
   const { t } = useLanguage();
   const isChoice = spreadId === 'choice';
 
@@ -66,23 +65,12 @@ export default function QuestionInput({ onSubmit, onSkip, onBack, spreadId }) {
               <textarea
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                onFocus={() => setFocused(true)}
-                onBlur={() => setFocused(false)}
                 placeholder={t.questionPlaceholder}
                 rows={4}
                 className="w-full bg-white/5 border border-white/15 rounded-xl px-4 py-3
                            text-white/90 text-sm placeholder-white/25 resize-none
-                           focus:outline-none transition-all duration-500
+                           focus:outline-none transition-all duration-300
                            focus:border-amber-400/50 focus:bg-white/8"
-              />
-              {/* Focus glow */}
-              <motion.div
-                className="absolute -inset-px rounded-xl pointer-events-none"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(251,191,36,0.3), rgba(168,85,247,0.3))',
-                }}
-                animate={{ opacity: focused ? 0.6 : 0 }}
-                transition={{ duration: 0.3 }}
               />
             </div>
           )}
