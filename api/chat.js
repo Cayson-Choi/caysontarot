@@ -1,3 +1,5 @@
+import { buildCardReference } from './tarot-data.js';
+
 export const maxDuration = 60;
 
 export default async function handler(req, res) {
@@ -59,6 +61,11 @@ Previous interpretation:
 ${reading || '(none)'}
 
 Keep the above cards and interpretation as context while answering the user's follow-up questions. Keep responses concise, under 200 words.`;
+  }
+
+  const cardRef = buildCardReference(cards || []);
+  if (cardRef) {
+    systemPrompt += cardRef;
   }
 
   // Build conversation: system + message history

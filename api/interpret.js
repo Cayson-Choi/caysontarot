@@ -1,3 +1,5 @@
+import { buildCardReference } from './tarot-data.js';
+
 export const maxDuration = 60;
 
 export default async function handler(req, res) {
@@ -96,6 +98,11 @@ You must directly answer the question above.`;
     systemPrompt = `${baseRules}\n\n${spreadChoice}`;
   } else {
     systemPrompt = `${baseRules}\n\n${spreadGeneral}`;
+  }
+
+  const cardRef = buildCardReference(cards);
+  if (cardRef) {
+    systemPrompt += cardRef;
   }
 
   try {

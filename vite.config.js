@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
+import { buildCardReference } from './api/tarot-data.js';
 
 // Dev-only API plugin that mimics the Vercel serverless functions
 function devApiPlugin() {
@@ -75,6 +76,11 @@ Previous interpretation:
 ${reading || '(none)'}
 
 Keep the above cards and interpretation as context while answering the user's follow-up questions. Keep responses concise, under 200 words.`;
+        }
+
+        const cardRef = buildCardReference(cards || []);
+        if (cardRef) {
+          systemPrompt += cardRef;
         }
 
         const chatMessages = [
@@ -229,6 +235,11 @@ You must directly answer the question above.`;
           systemPrompt = `${baseRules}\n\n${spreadChoice}`;
         } else {
           systemPrompt = `${baseRules}\n\n${spreadGeneral}`;
+        }
+
+        const cardRef = buildCardReference(cards);
+        if (cardRef) {
+          systemPrompt += cardRef;
         }
 
         try {
