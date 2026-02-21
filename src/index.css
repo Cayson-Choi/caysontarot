@@ -163,8 +163,9 @@ body {
   font-size: 1.25rem;
   line-height: 1.6;
   color: #0a0804;
-  text-align: left;
+  text-align: justify;
   word-break: break-all;
+  padding: 0 1.5rem;
 }
 
 /* ─── Compact scroll for Yes/No (shorter answers) ─── */
