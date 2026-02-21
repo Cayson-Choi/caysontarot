@@ -44,7 +44,17 @@ export default function FollowUpChat({ messages, loading, error, onSend }) {
     >
       {/* Hint text */}
       {messages.length === 0 && (
-        <p className="text-center text-white/30 text-xs mb-3">{t.chatHint}</p>
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <motion.span
+            className="inline-block px-2 py-0.5 rounded-full text-[10px] font-bold
+                       bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg shadow-rose-500/30"
+            animate={{ scale: [1, 1.1, 1], rotate: [0, -3, 3, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            HOT
+          </motion.span>
+          <p className="text-rose-300/90 text-sm font-medium">{t.chatHint}</p>
+        </div>
       )}
 
       {/* Message bubbles */}
