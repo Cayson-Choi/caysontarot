@@ -64,6 +64,26 @@ function AppInner() {
     handleRequestAI();
   };
 
+  const handleSendChat = (message) => {
+    ai.sendChat({
+      message,
+      cards: reading.drawnCards.map((c) => ({
+        nameKo: c.nameKo,
+        nameEn: c.nameEn,
+        reversed: c.reversed || false,
+        position: reading.spread
+          ? (lang === 'ko' ? reading.spread.positionsKo : reading.spread.positionsEn)?.[
+              reading.drawnCards.indexOf(c)
+            ] || `${reading.drawnCards.indexOf(c) + 1}`
+          : `${reading.drawnCards.indexOf(c) + 1}`,
+      })),
+      spread: lang === 'ko' ? reading.spread?.nameKo : reading.spread?.nameEn,
+      question: reading.question,
+      reading: ai.reading,
+      lang,
+    });
+  };
+
   // Re-fetch AI reading when language changes on result screen
   const prevLangRef = useRef(lang);
   useEffect(() => {
@@ -180,6 +200,10 @@ function AppInner() {
               cards={reading.drawnCards}
               spread={reading.spread}
               question={reading.question}
+              chatMessages={ai.chatMessages}
+              chatLoading={ai.chatLoading}
+              chatError={ai.chatError}
+              onSendChat={handleSendChat}
             />
           )}
         </AnimatePresence>

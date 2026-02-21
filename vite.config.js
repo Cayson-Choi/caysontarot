@@ -2,11 +2,130 @@ import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 
-// Dev-only API plugin that mimics the Vercel serverless function
+// Dev-only API plugin that mimics the Vercel serverless functions
 function devApiPlugin() {
   return {
     name: 'dev-api',
     configureServer(server) {
+      // --- /api/chat endpoint ---
+      server.middlewares.use('/api/chat', async (req, res) => {
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.end(JSON.stringify({ error: 'Method not allowed' }));
+          return;
+        }
+
+        let body = '';
+        for await (const chunk of req) body += chunk;
+        const { cards, spread, question, reading, messages, lang } = JSON.parse(body);
+
+        if (!messages || !Array.isArray(messages) || messages.length === 0) {
+          res.statusCode = 400;
+          res.end(JSON.stringify({ error: 'Messages are required' }));
+          return;
+        }
+
+        const apiKey = process.env.OPENROUTER_API_KEY;
+        const model = process.env.OPENROUTER_MODEL || 'deepseek/deepseek-v3.2';
+
+        if (!apiKey) {
+          res.statusCode = 500;
+          res.end(JSON.stringify({ error: 'API key not configured' }));
+          return;
+        }
+
+        const isKo = lang === 'ko';
+
+        const cardList = (cards || [])
+          .map((c, i) => {
+            const name = `${c.nameEn} (${c.nameKo})`;
+            const orientation = c.reversed ? ' [Reversed]' : '';
+            const pos = c.position || `Card ${i + 1}`;
+            return `- Position [${pos}]: ${name}${orientation}`;
+          })
+          .join('\n');
+
+        let systemPrompt;
+
+        if (isKo) {
+          systemPrompt = `You are a tarot reader having a follow-up conversation. You MUST respond in Korean only.
+Write in plain text only. No markdown, no headers, no bold, no bullet points.
+한국어 반말(~해, ~야, ~거야, ~있어, ~해봐)로 친근하게 작성하고 존댓말은 사용하지 마라.
+
+이전 타로 리딩 맥락:
+사용자 질문: ${question || '일반 리딩'}
+스프레드: ${spread || 'Free Layout'}
+${cardList}
+
+이전 해석:
+${reading || '(없음)'}
+
+위 카드와 해석을 맥락으로 유지하면서 사용자의 후속 질문에 답하라. 200자 이내로 간결하게 답하라.`;
+        } else {
+          systemPrompt = `You are a tarot reader having a follow-up conversation. You MUST respond in English only.
+Write in plain text only. No markdown, no headers, no bold, no bullet points.
+Use a warm, friendly, casual tone as if talking to a close friend.
+
+Previous tarot reading context:
+User question: ${question || 'General reading'}
+Spread: ${spread || 'Free Layout'}
+${cardList}
+
+Previous interpretation:
+${reading || '(none)'}
+
+Keep the above cards and interpretation as context while answering the user's follow-up questions. Keep responses concise, under 200 words.`;
+        }
+
+        const chatMessages = [
+          { role: 'system', content: systemPrompt },
+          ...messages.map((m) => ({ role: m.role, content: m.content })),
+        ];
+
+        try {
+          const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model,
+              messages: chatMessages,
+              max_tokens: 800,
+              temperature: 0.7,
+            }),
+          });
+
+          if (!response.ok) {
+            const errText = await response.text();
+            console.error('OpenRouter error:', errText);
+            res.statusCode = 502;
+            res.setHeader('Content-Type', 'application/json');
+            res.end(JSON.stringify({ error: 'AI service error' }));
+            return;
+          }
+
+          const data = await response.json();
+          let text = data.choices?.[0]?.message?.content || '';
+
+          text = text.replace(/<think>[\s\S]*?<\/think>/g, '').trim();
+          text = text.replace(/#{1,6}\s?/g, '');
+          text = text.replace(/\*{1,2}([^*]+)\*{1,2}/g, '$1');
+          text = text.replace(/^[-•]\s+/gm, '');
+          text = text.trim();
+
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ reply: text }));
+        } catch (err) {
+          console.error('Chat error:', err);
+          res.statusCode = 500;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: 'Internal server error' }));
+        }
+      });
+
+      // --- /api/interpret endpoint ---
       server.middlewares.use('/api/interpret', async (req, res) => {
         if (req.method !== 'POST') {
           res.statusCode = 405;

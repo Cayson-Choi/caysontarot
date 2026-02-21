@@ -35,4 +35,8 @@ export default {
   cardPosition: 'Position',
   allowReversed: 'Allow Reversed',
   reversed: 'Reversed',
+  chatHint: 'Got more questions about your cards? Ask away!',
+  chatPlaceholder: 'Ask a follow-up question...',
+  chatSend: 'Send',
+  chatError: 'Failed to send message. Please try again.',
 };

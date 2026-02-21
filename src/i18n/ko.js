@@ -35,4 +35,8 @@ export default {
   cardPosition: '포지션',
   allowReversed: '역방향 사용',
   reversed: '역방향',
+  chatHint: '카드에 대해 더 궁금한 게 있으면 물어봐!',
+  chatPlaceholder: '궁금한 걸 물어보세요...',
+  chatSend: '보내기',
+  chatError: '메시지 전송에 실패했어요. 다시 시도해 주세요.',
 };

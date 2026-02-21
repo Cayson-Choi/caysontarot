@@ -4,6 +4,7 @@ import { HiOutlineMail } from 'react-icons/hi';
 import { useLanguage } from '../i18n/LanguageContext';
 import LoadingSpinner from './LoadingSpinner';
 import BackButton from './BackButton';
+import FollowUpChat from './FollowUpChat';
 import { captureElement, downloadCanvas } from '../utils/captureUtils';
 
 export default function AIReadingPanel({
@@ -16,6 +17,10 @@ export default function AIReadingPanel({
   cards,
   spread,
   question,
+  chatMessages,
+  chatLoading,
+  chatError,
+  onSendChat,
 }) {
   const { lang, t } = useLanguage();
   const captureRef = useRef(null);
@@ -308,6 +313,14 @@ export default function AIReadingPanel({
                 {t.newReading}
               </button>
             </motion.div>
+
+            {/* Follow-up Chat */}
+            <FollowUpChat
+              messages={chatMessages || []}
+              loading={chatLoading}
+              error={chatError}
+              onSend={onSendChat}
+            />
           </motion.div>
         )}
       </AnimatePresence>
