@@ -172,7 +172,7 @@ export default function AIReadingPanel({
                 )}
 
                 {/* AI reading text */}
-                <div className="parchment-body">{reading}</div>
+                <div className={`parchment-body ${lang === 'ko' ? 'parchment-body--ko' : 'parchment-body--en'}`}>{reading}</div>
 
                 {/* Bottom ornament */}
                 <div className="parchment-divider" />
