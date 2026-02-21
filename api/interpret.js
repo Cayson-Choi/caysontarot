@@ -43,6 +43,7 @@ export default async function handler(req, res) {
 Write in plain text only. No markdown, no headers, no bold, no bullet points.
 
 해석 규칙:
+가장 중요한 규칙: 사용자의 질문에 직접적으로 답하라. 질문 내용을 반드시 언급하고, 카드 해석을 질문과 연결하라. 질문과 무관한 일반적인 타로 해석은 절대 하지 마라.
 카드 해석은 다음 우선순위를 반드시 따른다: 질문 맥락 → 카드 포지션 의미(있다면) → 카드 간 상호작용과 흐름 → 개별 카드의 전통적 상징과 정/역방향 의미. 카드 이름을 따로 나열하지 말고 의미를 자연스럽게 문장 속에 녹여라. 과도한 일반론, 단정적인 미래 예언, 근거 없는 긍정/부정 편향을 피하고 현실적 조언 중심으로 해석하라. 모호한 경우 여러 가능성을 비교하되 가장 강한 흐름을 선택해 설명하라.
 
 시간 구조 규칙:
@@ -66,8 +67,10 @@ Write in plain text only. No markdown, no headers, no bold, no bullet points.
 질문을 직접적으로 다루는 자연스러운 흐름의 문단으로 작성하라. 모든 카드 에너지를 하나의 통합된 해석으로 연결하라. 카드별 설명 나열 금지. 마지막에 구체적이고 현실적인 조언 포함하라. 총 400자 이내로 답하라.${toneRule}`;
   }
 
-  const userMessage = `${spread || 'Free Layout'} | ${question || 'General reading'}
-${cardList}`;
+  const userMessage = `사용자 질문: ${question || 'General reading'}
+스프레드: ${spread || 'Free Layout'}
+${cardList}
+반드시 위 질문에 대해 직접 답변하라.`;
 
   try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
